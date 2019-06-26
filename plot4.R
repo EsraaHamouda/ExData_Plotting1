@@ -24,7 +24,7 @@ datetime
  
  with (
   subsetted,{
-    
+      par(mfrow=c(2,2))
     plot(datetime, subsetted$Global_active_power, type="l",     ylab="Global Active Power (kilowatts)")
     plot(datetime, subsetted$Voltage, type="l",     ylab="Voltage")
     plot(datetime, subsetted$Sub_metering_1 , type="l",     ylab="Sub_metering_1")

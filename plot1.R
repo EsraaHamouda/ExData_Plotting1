@@ -1,29 +1,27 @@
-getwd()
-setwd("D://DataSienceCoursera//Course4")
-getwd()
-MyData <- read.csv(file="D:/DataSienceCoursera/Course4/exdata_data_household_power_consumption/household_power_consumption.txt", header=TRUE, sep=",")
+
+MyData <- read.csv(file="D:/DataScienceCourse/exdata_data_household_power_consumption/household_power_consumption.txt", header=TRUE, sep=",")
 head(MyData)
 nrow(MyData)
 
 
 library(data.table)
-newFile <- fread("D:/DataSienceCoursera/Course4/exdata_data_household_power_consumption/household_power_consumption.txt", na.strings = "?")
-nrow(newFile)
-newFile[,DateTime := as.Date(paste(Date, Time), format = "%d/%m/%Y %H:%M:%S")]
-install.packages("dplyr")
+newFile <- fread("D:/DataScienceCourse/exdata_data_household_power_consumption/household_power_consumption.txt", na.strings = "?")
 
+newFile[,DateTime :=  paste(Date, Time, sep=' ') ]
+subsetted<-subset(newFile,newFile$Date=="1/2/2007"|newFile$Date=="2/2/2007")
+#subsetted <- filter(newFile, Date >= as.Date("1/2/2007"), Date < as.Date("2/2/2007"))
 
-library(dplyr)
-subsetted <- filter(newFile, DateTime >= as.Date("2007-02-01 00:00:00"), DateTime < as.Date("2007-02-02 00:00:00"))
-#View(subsetted)
+datetime <- strptime(paste(subsetted$Date, subsetted$Time, sep=" "), "%d/%m/%Y %H:%M:%S")
+#subsetted <- filter(newFile, Date >= as.Date("2/1/2007"), Date < as.Date("2/2/2007"))
+View(subsetted)
 nrow(subsetted)
-nrow(MyData)
 
-par("mar") 
- # histogram with added parameters
+View(subsetted)
+
+datetime <- strptime(subsetted$DateTime, "%d/%m/%Y %H:%M:%S")
+datetime
+
 hist(subsetted$Global_active_power,
      main="Global Active Power",
      xlab="Global Active Power(kilowatts)",
-      col="red",
-     freq=FALSE
-)
+     col="red")
